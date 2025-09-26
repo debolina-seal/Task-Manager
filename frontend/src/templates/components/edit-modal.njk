@@ -1,0 +1,85 @@
+{% macro editModal() %}
+<div id="task-modal" class="task-modal" style="display: none;">
+    <div class="task-modal-content govuk-width-container">
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+                <form id="edit-task-form" class="govuk-form">
+                    <fieldset class="govuk-fieldset">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                            <h2 class="govuk-fieldset__heading">
+                                Edit Task
+                            </h2>
+                        </legend>
+
+                        <input type="hidden" id="edit-task-id" name="id">
+
+                        <div class="govuk-form-group" id="edit-title-group">
+                            <label class="govuk-label govuk-label--m" for="edit-title">
+                                Task Title
+                            </label>
+                            <input class="govuk-input" id="edit-title" name="title" type="text" required>
+                        </div>
+
+                        <div class="govuk-form-group" id="edit-description-group">
+                            <label class="govuk-label govuk-label--m" for="edit-description">
+                                Description
+                            </label>
+                            <textarea class="govuk-textarea" id="edit-description" name="description" rows="4"></textarea>
+                        </div>
+
+                        <div class="govuk-form-group" id="edit-status-group">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                                    Status
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="edit-status-pending" name="edit-status" type="radio" value="pending">
+                                        <label class="govuk-label govuk-radios__label" for="edit-status-pending">
+                                            Pending
+                                        </label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="edit-status-in-progress" name="edit-status" type="radio" value="in_progress">
+                                        <label class="govuk-label govuk-radios__label" for="edit-status-in-progress">
+                                            In Progress
+                                        </label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="edit-status-completed" name="edit-status" type="radio" value="completed">
+                                        <label class="govuk-label govuk-radios__label" for="edit-status-completed">
+                                            Completed
+                                        </label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="edit-status-cancelled" name="edit-status" type="radio" value="cancelled">
+                                        <label class="govuk-label govuk-radios__label" for="edit-status-cancelled">
+                                            Cancelled
+                                        </label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+
+                        <div class="govuk-form-group" id="edit-due-date-group">
+                            <label class="govuk-label govuk-label--m" for="edit-due-date">
+                                Due Date and Time
+                            </label>
+                            <input class="govuk-input" id="edit-due-date" name="due-date" type="datetime-local" required>
+                        </div>
+
+                        <div class="govuk-button-group">
+                            <button class="govuk-button" data-module="govuk-button" type="submit" id="update-task-btn">
+                                Update Task
+                            </button>
+                            <button class="govuk-button govuk-button--secondary" data-module="govuk-button" type="button" id="close-modal-btn">
+                                Cancel
+                            </button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endmacro %}

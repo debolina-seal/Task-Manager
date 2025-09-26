@@ -1,0 +1,62 @@
+{% extends "base.njk" %}
+
+{% from "components/task-form.njk" import taskForm %}
+{% from "components/notification.njk" import errorSummary, successBanner, loadingSpinner %}
+{% from "components/task-card.njk" import taskList %}
+{% from "components/edit-modal.njk" import editModal %}
+
+{% block content %}
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+        <h1 class="govuk-heading-xl">Task Management System</h1>
+        <p class="govuk-body-l">Manage your tasks efficiently with this caseworker task management system.</p>
+    </div>
+</div>
+
+<!-- Loading indicator -->
+{{ loadingSpinner() }}
+
+<!-- Error messages -->
+<div id="error-container" style="display: none;">
+    {{ errorSummary([]) }}
+</div>
+
+<!-- Success messages -->
+<div id="success-container" style="display: none;">
+    {{ successBanner('') }}
+</div>
+
+<!-- Task creation form -->
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        {{ taskForm() }}
+    </div>
+</div>
+
+<!-- Task list -->
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+        <h2 class="govuk-heading-l">Your Tasks</h2>
+        
+        <div class="govuk-form-group">
+            <button class="govuk-button govuk-button--secondary" data-module="govuk-button" type="button" id="refresh-tasks-btn">
+                Refresh Tasks
+            </button>
+        </div>
+
+        {{ taskList([]) }}
+    </div>
+</div>
+
+<!-- Task Edit Modal -->
+{{ editModal() }}
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Initialize GOV.UK Frontend
+    if (window.GOVUKFrontend) {
+        window.GOVUKFrontend.initAll();
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" class="govuk-template">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{{ title }}{% endblock %}</title>
+    <meta name="description" content="{% block description %}{{ description }}{% endblock %}">
+    
+    <!-- GOV.UK Frontend CSS -->
+    <link rel="stylesheet" href="./node_modules/govuk-frontend/dist/govuk/govuk-frontend.min.css">
+    
+    {% block head %}{% endblock %}
+</head>
+<body class="govuk-template__body">
+    <script>document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');</script>
+
+    <a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link">Skip to main content</a>
+
+    {% block header %}
+    <header class="govuk-header" role="banner" data-module="govuk-header">
+        <div class="govuk-header__container govuk-width-container">
+            <div class="govuk-header__logo">
+                <a href="/" class="govuk-header__link govuk-header__link--homepage">
+                    <span class="govuk-header__logotype">
+                        <span class="govuk-header__logotype-text">
+                            HMCTS Task Manager
+                        </span>
+                    </span>
+                </a>
+            </div>
+        </div>
+    </header>
+    {% endblock %}
+
+    <div class="govuk-width-container">
+        {% block beforeContent %}{% endblock %}
+        
+        <main class="govuk-main-wrapper" id="main-content" role="main">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+    {% block footer %}
+    <footer class="govuk-footer" role="contentinfo">
+        <div class="govuk-width-container">
+            <div class="govuk-footer__meta">
+                <div class="govuk-footer__meta-item govuk-footer__meta-item--grow">
+                    <h2 class="govuk-visually-hidden">Support links</h2>
+                    <ul class="govuk-footer__inline-list">
+                        <li class="govuk-footer__inline-list-item">
+                            <a class="govuk-footer__link" href="/api/docs">
+                                API Documentation
+                            </a>
+                        </li>
+                        <li class="govuk-footer__inline-list-item">
+                            <a class="govuk-footer__link" href="/api/health">
+                                System Health
+                            </a>
+                        </li>
+                    </ul>
+                    <p class="govuk-footer__body">
+                        HMCTS Task Manager - Built with GOV.UK Design System
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    {% endblock %}
+
+    <!-- GOV.UK Frontend JavaScript -->
+    <script src="./node_modules/govuk-frontend/dist/govuk/govuk-frontend.min.js"></script>
+    
+    {% block scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,81 @@
+{% macro taskForm(formId = "task-form", legend = "Create New Task", submitText = "Create Task") %}
+<form id="{{ formId }}" class="govuk-form">
+    <fieldset class="govuk-fieldset">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+            <h2 class="govuk-fieldset__heading">
+                {{ legend }}
+            </h2>
+        </legend>
+
+        <div class="govuk-form-group" id="title-group">
+            <label class="govuk-label govuk-label--m" for="title">
+                Task Title
+            </label>
+            <input class="govuk-input" id="title" name="title" type="text" required>
+        </div>
+
+        <div class="govuk-form-group" id="description-group">
+            <label class="govuk-label govuk-label--m" for="description">
+                Description
+            </label>
+            <div class="govuk-hint">
+                Optional - provide additional details about the task
+            </div>
+            <textarea class="govuk-textarea" id="description" name="description" rows="4"></textarea>
+        </div>
+
+        <div class="govuk-form-group" id="status-group">
+            <fieldset class="govuk-fieldset">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                    Status
+                </legend>
+                <div class="govuk-radios" data-module="govuk-radios">
+                    <div class="govuk-radios__item">
+                        <input class="govuk-radios__input" id="status-pending" name="status" type="radio" value="pending" checked>
+                        <label class="govuk-label govuk-radios__label" for="status-pending">
+                            Pending
+                        </label>
+                    </div>
+                    <div class="govuk-radios__item">
+                        <input class="govuk-radios__input" id="status-in-progress" name="status" type="radio" value="in_progress">
+                        <label class="govuk-label govuk-radios__label" for="status-in-progress">
+                            In Progress
+                        </label>
+                    </div>
+                    <div class="govuk-radios__item">
+                        <input class="govuk-radios__input" id="status-completed" name="status" type="radio" value="completed">
+                        <label class="govuk-label govuk-radios__label" for="status-completed">
+                            Completed
+                        </label>
+                    </div>
+                    <div class="govuk-radios__item">
+                        <input class="govuk-radios__input" id="status-cancelled" name="status" type="radio" value="cancelled">
+                        <label class="govuk-label govuk-radios__label" for="status-cancelled">
+                            Cancelled
+                        </label>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+
+        <div class="govuk-form-group" id="due-date-group">
+            <label class="govuk-label govuk-label--m" for="due-date">
+                Due Date and Time
+            </label>
+            <div class="govuk-hint">
+                For example, 2024-12-31T23:59
+            </div>
+            <input class="govuk-input" id="due-date" name="due-date" type="datetime-local" required>
+        </div>
+
+        <div class="govuk-button-group">
+            <button class="govuk-button" data-module="govuk-button" type="submit" id="create-task-btn">
+                {{ submitText }}
+            </button>
+            <button class="govuk-button govuk-button--secondary" data-module="govuk-button" type="button" id="cancel-btn">
+                Cancel
+            </button>
+        </div>
+    </fieldset>
+</form>
+{% endmacro %}

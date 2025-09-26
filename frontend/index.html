@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en" class="govuk-template">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HMCTS Task Manager</title>
+    <link rel="stylesheet" href="./node_modules/govuk-frontend/dist/govuk/govuk-frontend.min.css">
+    <link rel="stylesheet" href="./src/styles/main.css">
+</head>
+<body class="govuk-template__body">
+    <script>document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');</script>
+
+    <a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link">Skip to main content</a>
+
+    <header class="govuk-header" role="banner" data-module="govuk-header">
+        <div class="govuk-header__container govuk-width-container">
+            <div class="govuk-header__logo">
+                <a href="/" class="govuk-header__link govuk-header__link--homepage">
+                    <span class="govuk-header__logotype">
+                        <span class="govuk-header__logotype-text">
+                            HMCTS Task Manager
+                        </span>
+                    </span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <div class="govuk-width-container">
+        <main class="govuk-main-wrapper" id="main-content" role="main">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <h1 class="govuk-heading-xl">Task Management System</h1>
+                    <p class="govuk-body-l">Manage your tasks efficiently with this caseworker task management system.</p>
+                </div>
+            </div>
+
+            <!-- Loading indicator -->
+            <div id="loading" class="govuk-grid-row" style="display: none;">
+                <div class="govuk-grid-column-full">
+                    <div class="loading-spinner">
+                        <div class="govuk-body">Loading...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Error messages -->
+            <div id="error-container" style="display: none;">
+                <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" data-module="govuk-error-summary">
+                    <h2 class="govuk-error-summary__title" id="error-summary-title">
+                        There is a problem
+                    </h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list" id="error-list">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Success messages -->
+            <div id="success-container" style="display: none;">
+                <div class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+                    <div class="govuk-notification-banner__header">
+                        <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+                            Success
+                        </h2>
+                    </div>
+                    <div class="govuk-notification-banner__content">
+                        <p class="govuk-notification-banner__heading" id="success-message">
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Task creation form -->
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-two-thirds">
+                    <form id="task-form" class="govuk-form">
+                        <fieldset class="govuk-fieldset">
+                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                <h2 class="govuk-fieldset__heading">
+                                    Create New Task
+                                </h2>
+                            </legend>
+
+                            <div class="govuk-form-group" id="title-group">
+                                <label class="govuk-label govuk-label--m" for="title">
+                                    Task Title
+                                </label>
+                                <input class="govuk-input" id="title" name="title" type="text" required>
+                            </div>
+
+                            <div class="govuk-form-group" id="description-group">
+                                <label class="govuk-label govuk-label--m" for="description">
+                                    Description
+                                </label>
+                                <div class="govuk-hint">
+                                    Optional - provide additional details about the task
+                                </div>
+                                <textarea class="govuk-textarea" id="description" name="description" rows="4"></textarea>
+                            </div>
+
+                            <div class="govuk-form-group" id="status-group">
+                                <fieldset class="govuk-fieldset">
+                                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                                        Status
+                                    </legend>
+                                    <div class="govuk-radios" data-module="govuk-radios">
+                                        <div class="govuk-radios__item">
+                                            <input class="govuk-radios__input" id="status-pending" name="status" type="radio" value="pending" checked>
+                                            <label class="govuk-label govuk-radios__label" for="status-pending">
+                                                Pending
+                                            </label>
+                                        </div>
+                                        <div class="govuk-radios__item">
+                                            <input class="govuk-radios__input" id="status-in-progress" name="status" type="radio" value="in_progress">
+                                            <label class="govuk-label govuk-radios__label" for="status-in-progress">
+                                                In Progress
+                                            </label>
+                                        </div>
+                                        <div class="govuk-radios__item">
+                                            <input class="govuk-radios__input" id="status-completed" name="status" type="radio" value="completed">
+                                            <label class="govuk-label govuk-radios__label" for="status-completed">
+                                                Completed
+                                            </label>
+                                        </div>
+                                        <div class="govuk-radios__item">
+                                            <input class="govuk-radios__input" id="status-cancelled" name="status" type="radio" value="cancelled">
+                                            <label class="govuk-label govuk-radios__label" for="status-cancelled">
+                                                Cancelled
+                                            </label>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+
+                            <div class="govuk-form-group" id="due-date-group">
+                                <label class="govuk-label govuk-label--m" for="due-date">
+                                    Due Date and Time
+                                </label>
+                                <div class="govuk-hint">
+                                    For example, 2024-12-31T23:59
+                                </div>
+                                <input class="govuk-input" id="due-date" name="due-date" type="datetime-local" required>
+                            </div>
+
+                            <div class="govuk-button-group">
+                                <button class="govuk-button" data-module="govuk-button" type="submit" id="create-task-btn">
+                                    Create Task
+                                </button>
+                                <button class="govuk-button govuk-button--secondary" data-module="govuk-button" type="button" id="cancel-btn">
+                                    Cancel
+                                </button>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Task list -->
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <h2 class="govuk-heading-l">Your Tasks</h2>
+                    
+                    <div class="govuk-form-group">
+                        <button class="govuk-button govuk-button--secondary" data-module="govuk-button" type="button" id="refresh-tasks-btn">
+                            Refresh Tasks
+                        </button>
+                    </div>
+
+                    <div id="tasks-container">
+                        <!-- Tasks will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <footer class="govuk-footer" role="contentinfo">
+        <div class="govuk-width-container">
+            <div class="govuk-footer__meta">
+                <div class="govuk-footer__meta-item govuk-footer__meta-item--grow">
+                    <h2 class="govuk-visually-hidden">Support links</h2>
+                    <ul class="govuk-footer__inline-list">
+                        <li class="govuk-footer__inline-list-item">
+                            <a class="govuk-footer__link" href="/api/docs">
+                                API Documentation
+                            </a>
+                        </li>
+                        <li class="govuk-footer__inline-list-item">
+                            <a class="govuk-footer__link" href="/api/health">
+                                System Health
+                            </a>
+                        </li>
+                    </ul>
+                    <p class="govuk-footer__body">
+                        HMCTS Task Manager - Built with GOV.UK Design System
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Task Edit Modal -->
+    <div id="task-modal" class="task-modal" style="display: none;">
+        <div class="task-modal-content govuk-width-container">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-two-thirds">
+                    <form id="edit-task-form" class="govuk-form">
+                        <fieldset class="govuk-fieldset">
+                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                <h2 class="govuk-fieldset__heading">
+                                    Edit Task
+                                </h2>
+                            </legend>
+
+                            <input type="hidden" id="edit-task-id" name="id">
+
+                            <div class="govuk-form-group" id="edit-title-group">
+                                <label class="govuk-label govuk-label--m" for="edit-title">
+                                    Task Title
+                                </label>
+                                <input class="govuk-input" id="edit-title" name="title" type="text" required>
+                            </div>
+
+                            <div class="govuk-form-group" id="edit-description-group">
+                                <label class="govuk-label govuk-label--m" for="edit-description">
+                                    Description
+                                </label>
+                                <textarea class="govuk-textarea" id="edit-description" name="description" rows="4"></textarea>
+                            </div>
+
+                            <div class="govuk-form-group" id="edit-status-group">
+                                <fieldset class="govuk-fieldset">
+                                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                                        Status
+                                    </legend>
+                                    <div class="govuk-radios" data-module="govuk-radios">
+                                        <div class="govuk-radios__item">
+                                            <input class="govuk-radios__input" id="edit-status-pending" name="edit-status" type="radio" value="pending">
+                                            <label class="govuk-label govuk-radios__label" for="edit-status-pending">
+                                                Pending
+                                            </label>
+                                        </div>
+                                        <div class="govuk-radios__item">
+                                            <input class="govuk-radios__input" id="edit-status-in-progress" name="edit-status" type="radio" value="in_progress">
+                                            <label class="govuk-label govuk-radios__label" for="edit-status-in-progress">
+                                                In Progress
+                                            </label>
+                                        </div>
+                                        <div class="govuk-radios__item">
+                                            <input class="govuk-radios__input" id="edit-status-completed" name="edit-status" type="radio" value="completed">
+                                            <label class="govuk-label govuk-radios__label" for="edit-status-completed">
+                                                Completed
+                                            </label>
+                                        </div>
+                                        <div class="govuk-radios__item">
+                                            <input class="govuk-radios__input" id="edit-status-cancelled" name="edit-status" type="radio" value="cancelled">
+                                            <label class="govuk-label govuk-radios__label" for="edit-status-cancelled">
+                                                Cancelled
+                                            </label>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+
+                            <div class="govuk-form-group" id="edit-due-date-group">
+                                <label class="govuk-label govuk-label--m" for="edit-due-date">
+                                    Due Date and Time
+                                </label>
+                                <input class="govuk-input" id="edit-due-date" name="due-date" type="datetime-local" required>
+                            </div>
+
+                            <div class="govuk-button-group">
+                                <button class="govuk-button" data-module="govuk-button" type="submit" id="update-task-btn">
+                                    Update Task
+                                </button>
+                                <button class="govuk-button govuk-button--secondary" data-module="govuk-button" type="button" id="close-modal-btn">
+                                    Cancel
+                                </button>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./node_modules/govuk-frontend/dist/govuk/govuk-frontend.min.js"></script>
+    <script type="module" src="./src/main.ts"></script>
+</body>
+</html>

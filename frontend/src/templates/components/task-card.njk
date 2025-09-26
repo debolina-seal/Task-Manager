@@ -1,0 +1,71 @@
+{% macro taskCard(task) %}
+<div class="task-card task-card--{{ task.status }}" data-task-id="{{ task.id }}">
+    <div class="task-card__header">
+        <h3 class="task-card__title">{{ task.title }}</h3>
+        <span class="task-card__status task-card__status--{{ task.status }}">
+            {{ task.status | replace('_', ' ') | title }}
+        </span>
+    </div>
+    
+    {% if task.description %}
+    <div class="task-card__description">
+        <p class="govuk-body">{{ task.description }}</p>
+    </div>
+    {% endif %}
+    
+    <div class="task-card__meta">
+        <div class="task-card__meta-item">
+            <strong>Due:</strong>
+            <span class="due-date" data-due-date="{{ task.due_date }}">
+                {{ task.due_date | formatDateTime }}
+            </span>
+        </div>
+        <div class="task-card__meta-item">
+            <strong>Created:</strong>
+            <span>{{ task.created_at | formatDateTime }}</span>
+        </div>
+        {% if task.updated_at != task.created_at %}
+        <div class="task-card__meta-item">
+            <strong>Updated:</strong>
+            <span>{{ task.updated_at | formatDateTime }}</span>
+        </div>
+        {% endif %}
+    </div>
+    
+    <div class="task-card__actions">
+        <div class="govuk-form-group" style="margin: 0; margin-right: 1rem;">
+            <label class="govuk-label govuk-visually-hidden" for="status-select-{{ task.id }}">
+                Change status
+            </label>
+            <select class="govuk-select" id="status-select-{{ task.id }}" data-task-id="{{ task.id }}" data-action="status-change">
+                <option value="pending" {{ 'selected' if task.status == 'pending' }}>Pending</option>
+                <option value="in_progress" {{ 'selected' if task.status == 'in_progress' }}>In Progress</option>
+                <option value="completed" {{ 'selected' if task.status == 'completed' }}>Completed</option>
+                <option value="cancelled" {{ 'selected' if task.status == 'cancelled' }}>Cancelled</option>
+            </select>
+        </div>
+        <button class="govuk-button govuk-button--secondary" data-module="govuk-button" type="button" data-action="edit" data-task-id="{{ task.id }}">
+            Edit
+        </button>
+        <button class="govuk-button govuk-button--warning" data-module="govuk-button" type="button" data-action="delete" data-task-id="{{ task.id }}">
+            Delete
+        </button>
+    </div>
+</div>
+{% endmacro %}
+
+{% macro taskList(tasks) %}
+<div id="tasks-container">
+    {% if tasks and tasks.length > 0 %}
+        {% for task in tasks %}
+            {{ taskCard(task) }}
+        {% endfor %}
+    {% else %}
+        <div class="tasks-empty">
+            <div class="tasks-empty__icon">📋</div>
+            <h3 class="govuk-heading-m">No tasks yet</h3>
+            <p class="govuk-body">Create your first task using the form above.</p>
+        </div>
+    {% endif %}
+</div>
+{% endmacro %}
